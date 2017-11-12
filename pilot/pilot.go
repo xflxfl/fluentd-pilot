@@ -109,6 +109,7 @@ type LogConfig struct {
 	Tags         map[string]string
 	Target       string
 	TimeKey      string
+	LogKey		 string
 }
 
 func (p *Pilot) cleanConfigs() error {
@@ -346,6 +347,7 @@ func (p *Pilot) parseLogConfig(name string, info *LogInfoNode, jsonLogPath strin
 
 	tags := info.get("tags")
 	tagMap, err := p.parseTags(tags)
+	logKey := info.get("logkey")
 
 	if err != nil {
 		return nil, fmt.Errorf("parse tags for %s error: %v", name, err)
@@ -368,6 +370,7 @@ func (p *Pilot) parseLogConfig(name string, info *LogInfoNode, jsonLogPath strin
 			FormatConfig: map[string]string{"time_format": "%Y-%m-%dT%H:%M:%S.%NZ"},
 			Target:       target,
 			TimeKey:      timeKey,
+			LogKey:       logKey,
 		}, nil
 	}
 
